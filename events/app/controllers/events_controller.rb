@@ -52,7 +52,6 @@ class EventsController < ApplicationController
 
   def authenticate_user
     @current_user_id = request.env['current_user_id']
-    byebug
     render json: { error: 'Not Authorized' }, status: 401 unless @current_user_id
   end
 end

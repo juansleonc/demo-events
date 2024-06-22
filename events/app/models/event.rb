@@ -6,7 +6,7 @@ class Event
   field :date, type: Time
   field :location, type: String
   field :capacity, type: Integer
-  belongs_to :user
+  field :user_id, type: BSON::ObjectId
 
   validates :name, :description, :date, :location, :capacity, presence: true
   validates :name, length: { maximum: 255 }
@@ -14,5 +14,5 @@ class Event
   validates :location, length: { maximum: 255 }
   validates :capacity, numericality: { only_integer: true }
   validates :date, date: { after: Time.now }
-  validates :user, presence: true
+  validates :user_id, presence: true
 end
