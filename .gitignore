@@ -1,0 +1,39 @@
+# Ignore bundler config.
+auth/.bundle
+events/.bundle
+
+# Ignore all logfiles and tempfiles.
+auth/log/*
+auth/tmp/*
+auth!/log/.keep
+auth!/tmp/.keep
+
+events/log/*
+events/tmp/*
+events!/log/.keep
+events!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+auth/tmp/pids/*
+auth!/tmp/pids/
+auth!/tmp/pids/.keep
+
+events/tmp/pids/*
+events!/tmp/pids/
+events!/tmp/pids/.keep
+
+# Ignore master key for decrypting credentials and more.
+auth/config/master.key
+events/config/master.key
+
+# Ignore secret files
+auth/.env
+auth/.env.*
+events/.env
+events/.env.*
+
+events/tmpapp/
+events/tmpapp/*
+events/vendor/
+events/tmp/
+events/tmp/*
