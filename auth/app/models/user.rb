@@ -1,5 +1,4 @@
 class User
-
   include Mongoid::Document
   include Mongoid::Timestamps
   include ActiveModel::SecurePassword
@@ -11,7 +10,10 @@ class User
   has_secure_password
   has_many :events
 
-  validates :email, presence: true, uniqueness: { case_sensitive: false }
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
+  validates :email, presence: true, uniqueness: { case_sensitive: false },
+                    format: { with: VALID_EMAIL_REGEX }
   validates :password, presence: true, length: { minimum: 6 }
   validates :role, presence: true, inclusion: { in: %w[user admin] }
 
