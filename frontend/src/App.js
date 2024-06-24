@@ -10,6 +10,8 @@ import EventForm from './components/Events/EventForm';
 import EventEdit from './components/Events/EventEdit';
 import PrivateLayout from './components/Layout/PrivateLayout';
 import PublicLayout from './components/Layout/PublicLayout';
+import Profile from './components/Profile/Profile';
+
 
 
 
@@ -51,6 +53,7 @@ function App() {
         <PrivateRoute path="/events" component={EventList} />
         <PrivateRoute path="/event/new" component={EventForm} />
         <PrivateRoute path="/event/edit/:id" component={EventEdit} />
+        <PrivateRoute path="/profile" component={Profile} />
         <Redirect from="*" to="/events" />
       </Switch>
     </Router>

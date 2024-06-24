@@ -1,0 +1,16 @@
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rake
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  Exclude:
+    - '**/*.yml'
+Style/Documentation:
+  Enabled: false
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'

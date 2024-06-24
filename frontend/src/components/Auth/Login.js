@@ -4,6 +4,7 @@ import { useStores } from '../../stores';
 import { useHistory } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import CustomSnackbar from '../Common/CustomSnackbar';
+import { validateEmail } from '../../utils/validation';
 
 const Login = observer(() => {
   const { authStore } = useStores();
@@ -15,9 +16,8 @@ const Login = observer(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailPattern.test(email)) {
+    
+    if (!validateEmail(email)) {
       setErrorMessage('Invalid email address');
       setOpenSnackbar(true);
       return;
