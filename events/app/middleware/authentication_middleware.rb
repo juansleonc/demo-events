@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AuthenticationMiddleware
   def initialize(app)
     @app = app
@@ -6,7 +8,7 @@ class AuthenticationMiddleware
   def call(env)
     auth_header = env['HTTP_AUTHORIZATION']
     if auth_header.present?
-      token = auth_header.split(' ').last
+      token = auth_header.split.last
       decoded_token = decode_token(token)
       if decoded_token
         env['current_user_id'] = decoded_token[0]['user_id']

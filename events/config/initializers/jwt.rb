@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Auth
   class JsonWebToken
     SECRET_KEY = Rails.application.secret_key_base
@@ -9,7 +11,7 @@ module Auth
 
     def self.decode(token)
       body = JWT.decode(token, SECRET_KEY, true, algorithm: 'HS256')[0]
-      HashWithIndifferentAccess.new body
+      ActiveSupport::HashWithIndifferentAccess.new body
     rescue JWT::DecodeError => e
       raise e
     end

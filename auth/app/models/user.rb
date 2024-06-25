@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -5,9 +7,8 @@ class User
 
   field :email, type: String
   field :password_digest, type: String
-  field :role, type: String, default: "user"
-  field :avatar, type: String, default: "http://example.com/avatar.png"
-
+  field :role, type: String, default: 'user'
+  field :avatar, type: String, default: 'http://example.com/avatar.png'
 
   has_secure_password
   has_many :events

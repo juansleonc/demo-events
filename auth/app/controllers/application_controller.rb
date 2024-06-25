@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::API
   def decoded_token
-    if auth_header
-      token = auth_header.split(' ')[1]
-      begin
-        JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
-      rescue JWT::DecodeError
-        nil
-      end
+    return unless auth_header
+
+    token = auth_header.split(' ')[1]
+    begin
+      JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
+    rescue JWT::DecodeError
+      nil
     end
   end
 

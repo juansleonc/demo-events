@@ -1,46 +1,54 @@
+# frozen_string_literal: true
+
 class EventsController < ApplicationController
-  before_action :set_event, only: [:show, :update, :destroy]
+  include ErrorHandler
+  include ResponseHandler
+
+  before_action :set_event, only: %i[show update destroy]
   before_action :authenticate_user
 
-  # GET /events
   def index
-    @events = Event.where(user_id: @current_user_id)
-    render json: @events, each_serializer: EventSerializer
+    events = current_user_events
+    render_success(events, each_serializer: EventSerializer)
   end
 
-  # GET /events/:id
   def show
-    render json: @event, serializer: EventSerializer
+    render_success(@event, serializer: EventSerializer)
   end
 
-  # POST /events
   def create
-    @event = Event.new(event_params)
-    @event.user_id = @current_user_id
-
-    if @event.save
-      render json: @event, serializer: EventSerializer, status: :created
+    event = build_event
+    if event.save
+      render_success(event, status: :created, serializer: EventSerializer)
     else
-      render json: @event.errors, status: :unprocessable_entity
+      render_error(event.errors)
     end
   end
 
-  # PATCH/PUT /events/:id
   def update
     if @event.update(event_params)
-      render json: @event, serializer: EventSerializer
+      render_success(@event, serializer: EventSerializer)
     else
-      render json: @event.errors, status: :unprocessable_entity
+      render_error(@event.errors)
     end
   end
 
-  # DELETE /events/:id
   def destroy
     @event.destroy
     head :no_content
   end
 
   private
+
+  def current_user_events
+    Event.where(user_id: @current_user_id)
+  end
+
+  def build_event
+    Event.new(event_params).tap do |event|
+      event.user_id = @current_user_id
+    end
+  end
 
   def set_event
     @event = Event.find(params[:id])
@@ -52,6 +60,6 @@ class EventsController < ApplicationController
 
   def authenticate_user
     @current_user_id = request.env['current_user_id']
-    render json: { error: 'Not Authorized' }, status: :unauthorized unless @current_user_id
+    render_error('Not Authorized', :unauthorized)  unless @current_user_id
   end
 end

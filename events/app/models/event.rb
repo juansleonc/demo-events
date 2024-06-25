@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Event
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -13,6 +15,6 @@ class Event
   validates :description, length: { maximum: 255 }
   validates :location, length: { maximum: 255 }
   validates :capacity, numericality: { only_integer: true }
-  validates :date, date: { after: Time.now }
+  validates :date, date: { after: Time.zone.now }
   validates :user_id, presence: true
 end
