@@ -43,17 +43,17 @@ const EventList = observer(() => {
         </Typography>
         <List>
           {eventStore.events.map((event) => (
-            <React.Fragment key={event._id}>
+            <React.Fragment key={event.id}>
               <ListItem
                 secondaryAction={
                   <Box>
                     <Tooltip title="Edit">
-                      <IconButton edge="end" aria-label="edit" onClick={() => handleEdit(event._id)} color="primary">
+                      <IconButton edge="end" aria-label="edit" onClick={() => handleEdit(event.id)} color="primary">
                         <EditIcon />
                       </IconButton>
                     </Tooltip>
                     <Tooltip title="Delete">
-                      <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(event._id)} color="secondary">
+                      <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(event.id)} color="secondary">
                         <DeleteIcon />
                       </IconButton>
                     </Tooltip>

@@ -5,6 +5,6 @@ FactoryBot.define do
     date { Faker::Date.forward(days: 23) }
     location { Faker::Address.full_address }
     capacity { rand(10..100) }
-    association :user
+    user_id { 'user_di123' }
   end
 end

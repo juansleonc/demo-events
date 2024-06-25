@@ -38,6 +38,9 @@ gem 'mongoid'
 # JWT for authentication
 gem 'jwt'
 
+# Serializer response
+gem 'active_model_serializers', '~> 0.10.0'
+
 # Log errors
 # gem 'sentry-rails'
 # gem 'sentry-ruby'
@@ -53,7 +56,7 @@ end
 
 group :test do
   # Test framework
-  gem 'factory_bot_rails', '~> 5.0.0'
+  gem 'factory_bot_rails'
   gem 'faker'
   gem 'database_cleaner-mongoid' # For RSpec
   gem 'mongoid-rspec'

@@ -5,12 +5,12 @@ class EventsController < ApplicationController
   # GET /events
   def index
     @events = Event.where(user_id: @current_user_id)
-    render json: @events
+    render json: @events, each_serializer: EventSerializer
   end
 
   # GET /events/:id
   def show
-    render json: @event
+    render json: @event, serializer: EventSerializer
   end
 
   # POST /events
@@ -19,7 +19,7 @@ class EventsController < ApplicationController
     @event.user_id = @current_user_id
 
     if @event.save
-      render json: @event, status: :created
+      render json: @event, serializer: EventSerializer, status: :created
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/:id
   def update
     if @event.update(event_params)
-      render json: @event
+      render json: @event, serializer: EventSerializer
     else
       render json: @event.errors, status: :unprocessable_entity
     end
@@ -52,6 +52,6 @@ class EventsController < ApplicationController
 
   def authenticate_user
     @current_user_id = request.env['current_user_id']
-    render json: { error: 'Not Authorized' }, status: 401 unless @current_user_id
+    render json: { error: 'Not Authorized' }, status: :unauthorized unless @current_user_id
   end
 end
