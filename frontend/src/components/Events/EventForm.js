@@ -4,9 +4,11 @@ import { useStores } from '../../stores';
 import { Container, Typography } from '@mui/material';
 import EventFormComponent from './EventFormComponent';
 import CustomSnackbar from '../Common/CustomSnackbar';
+import { useHistory } from 'react-router-dom';
 
 const EventForm = observer(() => {
   const { eventStore } = useStores();
+  const history = useHistory();
   const [event, setEvent] = useState({
     name: '',
     description: '',
@@ -21,6 +23,8 @@ const EventForm = observer(() => {
     e.preventDefault();
     try {
       await eventStore.createEvent(event);
+      history.push(`/events`);
+
     } catch (error) {
       setErrorMessage('Failed to create event');
       setOpenSnackbar(true);

@@ -1,5 +1,4 @@
 class ProfilesController < ApplicationController
-  before_action :authenticate_user!
 
   def show
     render json: current_user.profile
@@ -14,6 +13,8 @@ class ProfilesController < ApplicationController
   end
 
   private
+
+
 
   def profile_params
     params.require(:user).permit(:name, :email, :bio, :avatar)

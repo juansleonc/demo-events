@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { Avatar, Typography, Box } from '@mui/material';
 import { styled } from '@mui/system';
@@ -29,19 +29,20 @@ const Profile = observer(() => {
     return <div>Loading...</div>;
   }
 
+  const { name, avatar } = profileStore.profile;
+
   return (
     <ProfileContainer>
       <LargeAvatar
-        src={profileStore.profile.avatar}
-        alt={profileStore.profile.name}
+        src={avatar}
+        alt={name}
       >
-        {profileStore.profile.name.charAt(0)}
+        {name ? name.charAt(0) : ''}
       </LargeAvatar>
       <Typography variant="h5" sx={{ mt: 2 }}>
-        {profileStore.profile.name}
+        {name || 'Anonymous'}
       </Typography>
       <ProfileForm profile={profileStore.profile} />
-
     </ProfileContainer>
   );
 });

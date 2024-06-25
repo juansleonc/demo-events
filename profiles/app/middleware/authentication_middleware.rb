@@ -12,8 +12,9 @@ class AuthenticationMiddleware
         env['current_user_id'] = decoded_token[0]['user_id']
         return @app.call(env)
       end
+    else
+      unauthorized_response
     end
-    unauthorized_response
   end
 
   private

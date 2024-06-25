@@ -8,6 +8,8 @@ require 'support/test_helpers'
 require 'rack/test'
 require 'database_cleaner-mongoid'
 require 'shoulda/matchers'
+require 'factory_bot_rails'
+require 'faker'
 
 Mongoid.load!(File.join(File.dirname(__FILE__), '..', 'config', 'mongoid.yml'), :test)
 
@@ -123,6 +125,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include TestHelpers, type: :request
   config.include Rack::Test::Methods
+  config.include FactoryBot::Syntax::Methods
 end
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

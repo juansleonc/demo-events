@@ -15,7 +15,7 @@ class ProfileStore {
 
   async fetchProfile() {
     try {
-        const response = await axios.get('http://localhost:8098/profile', {
+        const response = await axios.get('http://localhost:8098/profile.json', {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         runInAction(() => {
