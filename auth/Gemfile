@@ -38,6 +38,9 @@ gem 'mongoid'
 # Use JWT for authentication
 gem 'jwt', '~> 2.2'
 
+# Serializer response
+gem 'active_model_serializers', '~> 0.10.0'
+
 # Log errors
 # gem 'sentry-rails'
 # gem 'sentry-ruby'

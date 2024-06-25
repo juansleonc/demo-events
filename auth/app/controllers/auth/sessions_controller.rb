@@ -4,7 +4,7 @@ module Auth
       begin
         user = User.find_by(email: params[:email])
         if user&.authenticate(params[:password])
-          render json: { token: encode_token(user_id: user.id) }
+          render json: user, serializer: UserSerializer, token: encode_token(user_id: user.id), status: :ok
         else
           render json: { errors: "Invalid email or password" }, status: :unauthorized
         end

@@ -1,39 +1,39 @@
 require 'rails_helper'
 
-RSpec.describe Auth::RegistrationsController, type: :controller do
+RSpec.describe Auth::SessionsController, type: :controller do
   describe 'POST #create' do
-    let(:valid_attributes) { attributes_for(:user) }
+    let(:user) { create(:user, password: 'password') }
 
-    let(:invalid_attributes) do
-      {
-        user: {
-          email: 'invalid_email',
-          password: 'password',
-          password_confirmation: 'wrong_password',
-          role: 'user'
-        }
-      }
-    end
+    context 'with valid credentials' do
+      it 'returns a token' do
+        post :create, params: { email: user.email, password: 'password' }
 
-    context 'with valid attributes' do
-      it 'creates a new user and returns a token' do
-        expect {
-          post :create, params: { user: valid_attributes }
-        }.to change(User, :count).by(1)
-
-        expect(response).to have_http_status(:created)
-        expect(JSON.parse(response.body)).to have_key('token')
+        expect(response).to have_http_status(:ok)
+        json_response = JSON.parse(response.body)
+        expect(json_response).to have_key('token')
+        expect(json_response['token']).to be_present
       end
     end
 
-    context 'with invalid attributes' do
-      it 'does not create a new user and returns errors' do
-        expect {
-          post :create, params: invalid_attributes
-        }.to_not change(User, :count)
+    context 'with invalid credentials' do
+      it 'returns an error' do
+        post :create, params: { email: user.email, password: 'wrongpassword' }
 
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(JSON.parse(response.body)).to have_key('errors')
+        expect(response).to have_http_status(:unauthorized)
+        json_response = JSON.parse(response.body)
+        expect(json_response).to have_key('errors')
+        expect(json_response['errors']).to eq('Invalid email or password')
+      end
+    end
+
+    context 'with non-existent user' do
+      it 'returns an error' do
+        post :create, params: { email: 'nonexistent@example.com', password: 'password' }
+
+        expect(response).to have_http_status(:unauthorized)
+        json_response = JSON.parse(response.body)
+        expect(json_response).to have_key('errors')
+        expect(json_response['errors']).to eq('Invalid email or password')
       end
     end
   end
