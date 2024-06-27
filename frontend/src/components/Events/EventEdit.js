@@ -15,6 +15,8 @@ const EventEdit = observer(() => {
     description: '',
     date: '',
     location: '',
+    latitude: '',
+    longitude: '',
     capacity: '',
   });
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -25,9 +27,9 @@ const EventEdit = observer(() => {
       try {
         const fetchedEvent = await eventStore.getEvent(id);
         const formattedEvent = {
-            ...fetchedEvent,
-            date: new Date(fetchedEvent.date).toISOString().slice(0, 16),
-          };
+          ...fetchedEvent,
+          date: new Date(fetchedEvent.date).toISOString().slice(0, 16),
+        };
         setCurrentEvent(formattedEvent);
       } catch (error) {
         setErrorMessage('Failed to load event');

@@ -1,8 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Box } from '@mui/material';
+import MapComponent from '../Common/MapComponent';
 
 const EventFormComponent = ({ event, setEvent, handleSubmit, buttonText }) => {
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (event.latitude && event.longitude) {
+      setEvent((prevEvent) => ({
+        ...prevEvent,
+        location: `${event.latitude}, ${event.longitude}`
+      }));
+    }
+  }, [event.latitude, event.longitude, setEvent]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,6 +52,15 @@ const EventFormComponent = ({ event, setEvent, handleSubmit, buttonText }) => {
     }
 
     setErrors(newErrors);
+  };
+
+  const handleLocationSelected = (location) => {
+    setEvent((prevEvent) => ({
+      ...prevEvent,
+      location: `${location.lat}, ${location.lng}`,
+      latitude: location.lat,
+      longitude: location.lng
+    }));
   };
 
   const isFormValid = () => {
@@ -100,6 +119,15 @@ const EventFormComponent = ({ event, setEvent, handleSubmit, buttonText }) => {
         error={!!errors.date}
         helperText={errors.date}
       />
+      <MapComponent
+        initialLocation={{
+          lat: event.latitude !== undefined ? event.latitude : -3.745, 
+          lng: event.longitude !== undefined ? event.longitude : -38.523 
+        }}
+        onLocationSelected={handleLocationSelected}
+        eventTitle={event.name}
+        eventDescription={event.description}
+      />
       <TextField
         margin="normal"
         required
@@ -112,6 +140,35 @@ const EventFormComponent = ({ event, setEvent, handleSubmit, buttonText }) => {
         onChange={handleChange}
         error={!!errors.location}
         helperText={errors.location}
+        style={{ display: 'none' }}
+      />
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="latitude"
+        label="Latitude"
+        name="latitude"
+        autoComplete="latitude"
+        value={event.latitude || ''}
+        onChange={handleChange}
+        error={!!errors.latitude}
+        helperText={errors.latitude}
+        style={{ display: 'none' }}
+      />
+      <TextField
+        margin="normal"
+        required
+        fullWidth
+        id="longitude"
+        label="Longitude"
+        name="longitude"
+        autoComplete="longitude"
+        value={event.longitude || ''}
+        onChange={handleChange}
+        error={!!errors.longitude}
+        helperText={errors.longitude}
+        style={{ display: 'none' }}
       />
       <TextField
         margin="normal"

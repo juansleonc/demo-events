@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import { observer } from 'mobx-react';
 import { useStores } from './stores';
 
+import GoogleMapsLoader from './components/Common/GoogleMapsLoader';
 import Login from './components/Auth/Login';
 import Signup from './components/Auth/Signup';
 import EventList from './components/Events/EventList';
@@ -11,8 +12,6 @@ import EventEdit from './components/Events/EventEdit';
 import PrivateLayout from './components/Layout/PrivateLayout';
 import PublicLayout from './components/Layout/PublicLayout';
 import Profile from './components/Profile/Profile';
-
-
 
 
 const PrivateRoute = observer(({ component: Component, ...rest }) => {
@@ -46,17 +45,19 @@ const PublicRoute = ({ component: Component, ...rest }) => (
 
 function App() {
   return (
-    <Router>
-      <Switch>
-        <PublicRoute path="/login" component={Login} />
-        <PublicRoute path="/signup" component={Signup} />
-        <PrivateRoute path="/events" component={EventList} />
-        <PrivateRoute path="/event/new" component={EventForm} />
-        <PrivateRoute path="/event/edit/:id" component={EventEdit} />
-        <PrivateRoute path="/profile" component={Profile} />
-        <Redirect from="*" to="/events" />
-      </Switch>
-    </Router>
+    <GoogleMapsLoader>
+      <Router>
+        <Switch>
+          <PublicRoute path="/login" component={Login} />
+          <PublicRoute path="/signup" component={Signup} />
+          <PrivateRoute path="/events" component={EventList} />
+          <PrivateRoute path="/event/new" component={EventForm} />
+          <PrivateRoute path="/event/edit/:id" component={EventEdit} />
+          <PrivateRoute path="/profile" component={Profile} />
+          <Redirect from="*" to="/events" />
+        </Switch>
+      </Router>
+    </GoogleMapsLoader>
   );
 }
 

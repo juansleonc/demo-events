@@ -7,6 +7,8 @@ class Event
   field :description, type: String
   field :date, type: Time
   field :location, type: String
+  field :latitude, type: Float
+  field :longitude, type: Float
   field :capacity, type: Integer
   field :user_id, type: BSON::ObjectId
 
